@@ -1,0 +1,320 @@
+/* Home Page Styles */
+.home {
+  padding: 20px;
+  max-inline-size: 1400px;
+  margin: 0 auto;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Banner Styles */
+.banner {
+  display: flex;
+  background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-block-end: 40px;
+  color: white;
+  block-size: 300px;
+  position: relative;
+}
+
+.banner-content {
+  padding: 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+}
+
+.banner-tag {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-block-end: 15px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.banner h2 {
+  font-size: 36px;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.banner-subtitle {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0 0 25px 0;
+  max-inline-size: 500px;
+}
+
+.play-button {
+  background: #1DB954;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  inline-size: fit-content;
+  will-change: transform, background;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  transition: transform 0.2s ease-out, background 0.2s ease-out;
+}
+
+.play-button:hover {
+  background: #1ed760;
+  transform: scale(1.05) translateZ(0);
+}
+
+.banner-image {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  block-size: 100%;
+  inline-size: 50%;
+  overflow: hidden;
+}
+
+.banner-image img {
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: cover;
+  object-position: center;
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+}
+
+/* Section Styles */
+.section {
+  margin-block-end: 50px;
+}
+
+.section-title {
+  font-size: 24px;
+  margin: 0 0 20px 0;
+  color: #1f1f1f;
+  font-weight: 700;
+}
+
+/* Tracks Grid */
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.track-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  cursor: pointer;
+}
+
+.track-card:hover {
+  transform: translateY(-5px) translateZ(0);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.track-image {
+  inline-size: 100%;
+  block-size: 180px;
+  object-fit: cover;
+}
+
+.track-info {
+  padding: 15px;
+}
+
+.track-title {
+  font-size: 16px;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-artist {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 10px 0;
+}
+
+.track-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #888;
+}
+
+.track-plays,
+.track-date {
+  display: flex;
+  align-items: center;
+}
+
+.track-plays::before {
+  content: '▶';
+  margin-inline-end: 5px;
+  font-size: 10px;
+}
+
+/* Recommendations Grid */
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-block-end: 30px;
+}
+
+/* Horizontal scroller styles */
+.horizontal-section {
+  position: relative;
+  overflow: visible; /* allow arrows to stick out */
+}
+
+.horizontal-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 8px 48px; /* leave space for arrows */
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  block-size: 8px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 8px;
+}
+
+.scroll-btn {
+  position: absolute;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  inline-size: 52px;
+  block-size: 52px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(16,24,40,0.98);
+  color: white;
+  box-shadow: 0 16px 48px rgba(16,24,40,0.36);
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  opacity: 1;
+  transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
+  pointer-events: auto;
+}
+
+.scroll-btn.left { inset-inline-start: 16px; }
+.scroll-btn.right { inset-inline-end: 16px; }
+
+.scroll-btn { opacity: 0.98; }
+.scroll-btn:hover { transform: translateY(-50%) scale(1.06); opacity: 1; background: rgba(16,24,40,0.99); }
+
+.scroll-btn svg { display: block; inline-size: 24px; block-size: 24px; opacity: 0; }
+
+/* Quick visible fallback: render a high-contrast chevron via ::before so the arrow is always visible */
+.scroll-btn::before {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 10000;
+}
+.scroll-btn.left::before { content: '\25C0'; /* ◀ */ }
+.scroll-btn.right::before { content: '\25B6'; /* ▶ */ }
+
+/* Ensure SVG arrow strokes are always visible (white) and not blended */
+.scroll-btn svg,
+.scroll-btn svg path {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  /* allow filled icons */
+  mix-blend-mode: normal !important;
+}
+
+/* stronger drop shadow so white arrows pop on complex backgrounds */
+.scroll-btn svg {
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.65));
+}
+
+.scroll-btn.left { inset-inline-start: 16px; }
+.scroll-btn.right { inset-inline-end: 16px; }
+
+.horizontal-scroll > .recommendation-card,
+.horizontal-scroll > .track-card {
+  min-inline-size: 200px;
+  max-inline-size: 220px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .banner {
+    flex-direction: column;
+    block-size: auto;
+  }
+  
+  .banner-image {
+    position: relative;
+    inline-size: 100%;
+    block-size: 200px;
+  }
+  
+  .banner-content {
+    padding: 25px;
+  }
+  
+  .banner h2 {
+    font-size: 28px;
+  }
+  
+  .tracks-grid,
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    padding: 15px;
+  }
+  
+  .tracks-grid,
+  .recommendations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .section-title {
+    font-size: 20px;
+  }
+}
