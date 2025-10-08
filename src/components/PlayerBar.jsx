@@ -8,7 +8,7 @@ import {
   FaVolumeMute 
 } from 'react-icons/fa';
 import { HeartIcon, HeartFilledIcon } from './icons/MediaIcons.jsx';
-import { playUrl, pause, getCurrent, onChange, offChange, seek, setVolume as playerSetVolume, getTime, getDuration } from '../lib/player';
+import { playUrl, pause, getCurrent, onChange, offChange, seek, setVolume as playerSetVolume, getTime, getDuration, nextTrack, prevTrack } from '../lib/player';
 
 const PlayerBar = () => {
   // Состояние для управления воспроизведением
@@ -177,8 +177,7 @@ const PlayerBar = () => {
             <button 
               className="control-button"
               onClick={(e) => {
-                // previous - restart current track if any
-                try { const cur = getCurrent(); if (cur.url) playUrl(cur.url, cur.meta || null); } catch {};
+                try { prevTrack(); } catch {}
                 transientBlur(e);
               }}
             >
@@ -202,8 +201,7 @@ const PlayerBar = () => {
             <button 
               className="control-button"
               onClick={(e) => {
-                // next - not implemented yet; for now, stop
-                try { pause(); } catch {}
+                try { nextTrack(); } catch {}
                 transientBlur(e);
               }}
             >

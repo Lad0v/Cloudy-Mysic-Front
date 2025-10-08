@@ -1,40 +1,101 @@
-// Simple singleton audio player with change events
+// Simple singleton audio player with queue + change events
 const audio = new Audio();
 let currentSource = null;
 let isPlayingFlag = false;
-let currentMeta = null; // { title, artist, imageUrl, id }
+let currentMeta = null; // { title, artist, imageUrl, id, albumId, albumTitle, index }
+
+// Queue/album state
+let queue = []; // [{ url, meta }]
+let queueIndex = -1;
+let currentAlbumId = null; // reference to album/playlist id for navigation
 
 const events = new EventTarget();
 
-function emitChange() {
-  events.dispatchEvent(new CustomEvent('change', { detail: { url: currentSource, playing: isPlayingFlag, meta: currentMeta } }));
+function emitChange(extra = {}) {
+  events.dispatchEvent(new CustomEvent('change', { detail: { url: currentSource, playing: isPlayingFlag, meta: currentMeta, queueIndex, queueLength: queue.length, albumId: currentAlbumId, ...extra } }));
+}
+
+function internalPlayEntry(idx) {
+  if (idx < 0 || idx >= queue.length) return;
+  queueIndex = idx;
+  const entry = queue[idx];
+  currentSource = entry.url;
+  currentMeta = entry.meta;
+  audio.src = entry.url;
+  audio.play().then(() => {
+    console.log('[player] playback started idx', idx, entry);
+    emitChange();
+  }).catch(err => {
+    console.warn('[player] Playback failed for', entry.url, err);
+    emitChange({ error: err?.message });
+  });
+}
+
+export function clearQueue() {
+  queue = [];
+  queueIndex = -1;
+  currentAlbumId = null;
+  // do not stop playback explicitly; caller may call pause() if desired
+  emitChange();
 }
 
 export function playUrl(url, meta = null) {
   if (!url) return;
   console.log('[player] playUrl called with', url, meta);
+  // If this url is current, toggle play/pause
   if (currentSource === url) {
-    // toggle pause/play for same source
-    if (audio.paused) {
-      audio.play();
-    } else {
-      audio.pause();
-    }
-    // playback events will update flags and emit
-    return;
+    if (audio.paused) audio.play(); else audio.pause();
+    return; // events from audio element will propagate
   }
-  // switch to new source
-  currentSource = url;
-  currentMeta = meta;
-  audio.src = url;
-  audio.play().then(() => {
-    // success
-    console.log('[player] playback started for', url);
-    emitChange();
-  }).catch(err => {
-    console.warn('[player] Playback failed for', url, err);
-    emitChange();
-  });
+  // Replace queue with just this single track context
+  queue = [{ url, meta }];
+  currentAlbumId = meta?.albumId || null;
+  internalPlayEntry(0);
+}
+
+export function playAlbum(album, startIndex = 0) {
+  try {
+    if (!album) return;
+    // album: { id, title, artist, imageUrl, tracks:[{audioUrl, title, artist, imageUrl, id}] }
+    const tracks = (album.tracks || []).filter(t => t.audioUrl);
+    if (!tracks.length) return;
+    queue = tracks.map((t, i) => ({
+      url: t.audioUrl,
+      meta: {
+        id: t.id,
+        title: t.title,
+        artist: t.artist || album.artist,
+        imageUrl: t.imageUrl || album.imageUrl,
+        albumId: album.id,
+        albumTitle: album.title,
+        index: i,
+        total: tracks.length
+      }
+    }));
+    currentAlbumId = album.id;
+    const idx = Math.min(Math.max(0, startIndex), queue.length - 1);
+    internalPlayEntry(idx);
+  } catch (e) {
+    console.warn('[player] playAlbum failed', e);
+  }
+}
+
+export function nextTrack() {
+  if (queueIndex + 1 < queue.length) {
+    internalPlayEntry(queueIndex + 1);
+  } else {
+    // end of queue -> pause and keep last track meta
+    pause();
+  }
+}
+
+export function prevTrack() {
+  if (queueIndex > 0) {
+    internalPlayEntry(queueIndex - 1);
+  } else if (queueIndex === 0) {
+    // restart current
+    internalPlayEntry(0);
+  }
 }
 
 export function pause() {
@@ -62,7 +123,7 @@ export function isPlaying() {
 }
 
 export function getCurrent() {
-  return { url: currentSource, playing: isPlayingFlag, meta: currentMeta };
+  return { url: currentSource, playing: isPlayingFlag, meta: currentMeta, queueIndex, queueLength: queue.length, albumId: currentAlbumId };
 }
 
 export function getTime() {
@@ -100,7 +161,12 @@ audio.addEventListener('pause', () => {
 });
 audio.addEventListener('ended', () => {
   isPlayingFlag = false;
-  emitChange();
+  // auto-advance if queue not finished
+  if (queueIndex >= 0 && queueIndex + 1 < queue.length) {
+    nextTrack();
+  } else {
+    emitChange();
+  }
 });
 
-export default { playUrl, pause, isPlaying, getCurrent, onChange, offChange };
+export default { playUrl, playAlbum, nextTrack, prevTrack, clearQueue, pause, isPlaying, getCurrent, onChange, offChange };

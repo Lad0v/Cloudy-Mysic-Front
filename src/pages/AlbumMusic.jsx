@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import RecommendationCard from '../components/RecommendationCard';
-import { playUrl } from '../lib/player';
+import { playUrl, playAlbum } from '../lib/player';
 import './Home.css';
 import music from '../data/musicData'; // экспортирует { albumData, allTracks }
 
@@ -29,40 +29,68 @@ const AlbumMusic = () => {
 
   if (!album) return <div className="album-page">Альбом не найден</div>;
 
+  // like state persisted in localStorage
+  const storageKey = 'cloudy_album_likes';
+  const [liked, setLiked] = useState(() => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      const obj = raw ? JSON.parse(raw) : {};
+      return Boolean(obj[album.id]);
+    } catch { return false; }
+  });
+
+  const toggleLike = () => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      const obj = raw ? JSON.parse(raw) : {};
+      if (liked) delete obj[album.id]; else obj[album.id] = true;
+      localStorage.setItem(storageKey, JSON.stringify(obj));
+      setLiked(!liked);
+    } catch {/* ignore */}
+  };
+
   return (
-    <div className="album-page">
-      {/* Album Info */}
-      <div className="album-header">
-        <div className="album-cover">
-          <img src={album.imageUrl} alt={album.title} loading="lazy" decoding="async" />
+    <div className="album-page album-layout album-header-new">
+      <div className="album-header-row">
+        <div className="album-cover-frame-lg">
+          <img
+            className="album-cover-lg"
+            src={album.imageUrl}
+            alt={album.title}
+            loading="lazy"
+            decoding="async"
+            onError={(e)=>{ if(!e.currentTarget.src.endsWith('/placeholder.png')) e.currentTarget.src='/placeholder.png'; }}
+          />
         </div>
-        <div className="album-info">
-          <h1>{album.title}</h1>
-          <p>{album.artist}</p>
-          <div className="album-controls">
-            <button onClick={() => playUrl(album.tracks?.[0]?.audioUrl, { id: album.id, title: album.title, artist: album.artist, imageUrl: album.imageUrl })}>
-              ▶ Запустить
-            </button>
-            <button onClick={() => {/* like logic */}}>
-              ♡
-            </button>
+        <div className="album-head-text">
+          <h1 className="album-title">{album.title}</h1>
+          <p className="album-artist">{album.artist}</p>
+          <div className="album-buttons-row">
+            <button
+              className="album-play-btn"
+              onClick={() => playAlbum(album, 0)}
+            >▶ Play</button>
+            <button
+              className={"album-like-btn" + (liked ? ' liked' : '')}
+              onClick={toggleLike}
+              aria-pressed={liked}
+            >{liked ? '♥ Liked' : '♡ Like'}</button>
           </div>
         </div>
       </div>
-
-      {/* Tracks as Cards */}
-      <div>
-        <h3 style={{ marginBottom: 12 }}>Треки альбома:</h3>
+      <div className="album-tracks-wrap">
+        <h3 className="album-tracks-heading">Треки альбома</h3>
         <div className="recommendations-grid">
-          {album.tracks?.map(track => (
+          {album.tracks?.map((track, idx) => (
             <RecommendationCard
               key={track.id}
               title={track.title}
               subtitle={track.artist}
               imageUrl={track.imageUrl || album.imageUrl}
               audioUrl={track.audioUrl}
-              onClick={() => {
-                window.location.hash = `#/album/${album.id}/track/${track.id}`;
+              onClick={() => { 
+                // Play album starting at this track index so queue is established
+                playAlbum(album, idx);
               }}
             />
           ))}

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import './Profile.css';
 
 const PROFILE_KEY = 'cloudy_profile';
 
@@ -46,148 +47,132 @@ export default function Profile() {
   const [profile, setProfile] = useState(() => {
     const existing = readJSON(PROFILE_KEY, null);
     if (existing) return existing;
-    const stub = {
-      nickname: 'User',
-      email: '',
-      bio: '',
-      avatarDataUrl: '',
-      registeredAt: Date.now(),
-    };
+    const stub = { nickname: 'User123', email: 'user123@example.com', bio: '', avatarDataUrl: '', registeredAt: Date.now(), settings: { darkMode: false, notifications: true } };
     writeJSON(PROFILE_KEY, stub);
     return stub;
   });
-  const [editingNick, setEditingNick] = useState(false);
   const [editingBio, setEditingBio] = useState(false);
-  const [nickValue, setNickValue] = useState(profile.nickname || '');
   const [bioValue, setBioValue] = useState(profile.bio || '');
+  const [editingNick, setEditingNick] = useState(false);
+  const [nickValue, setNickValue] = useState(profile.nickname || '');
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    writeJSON(PROFILE_KEY, profile);
-  }, [profile]);
+  // Settings toggles
+  const settings = profile.settings || { darkMode: false, notifications: true };
+
+  useEffect(() => { writeJSON(PROFILE_KEY, profile); }, [profile]);
 
   const stats = useMemo(() => {
     const playlists = readList('cloudy_playlists', []);
     const uploads = readList('cloudy_uploads', []);
-    const favorites = readList('cloudy_liked_tracks', []);
-    const followingList = readList('cloudy_following', []);
-    const followersList = readList('cloudy_followers', []);
-    const publishedCount = uploads.filter((u) => u.status === 'published').length;
-    return {
-      playlists: playlists.length,
-      uploads: uploads.length,
-      published: publishedCount,
-      favorites: favorites.length,
-      following: Array.isArray(followingList) ? followingList.length : 0,
-      followers: Array.isArray(followersList) ? followersList.length : 0,
-    };
+    const publishedCount = uploads.filter(u => u.status === 'published').length;
+    return { playlists: playlists.length, uploads: uploads.length, published: publishedCount, followers: 0, following: 0 };
   }, [profile]);
 
   const changeAvatar = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const dataUrl = await fileToDataURL(file);
-    setProfile((p) => ({ ...p, avatarDataUrl: dataUrl }));
-    // reset input to allow same file selection again
+    setProfile(p => ({ ...p, avatarDataUrl: dataUrl }));
     e.target.value = '';
+  };
+
+  const toggleSetting = (key) => {
+    setProfile(p => ({ ...p, settings: { ...p.settings, [key]: !p.settings?.[key] } }));
   };
 
   const logout = () => {
     localStorage.removeItem('auth_token');
     window.location.hash = '#/profile';
-    // мгновенное обновление состояния приложения
     setTimeout(() => window.location.reload(), 0);
   };
 
-  const goMyMusic = () => (window.location.hash = '#/my-music');
-  const goPlaylists = () => (window.location.hash = '#/playlists');
-
   return (
-    <div className="profile-page" style={{ display: 'grid', placeItems: 'start', gap: 24 }}>
-      <div className="profile-card" style={{ background: 'rgba(255,255,255,0.85)', borderRadius: 16, padding: 28, maxWidth: 1200, width: '100%' }}>
-        <h1 className="profile-title" style={{ marginBottom: 20 }}>Профиль</h1>
-
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-          <div style={{ width: 140, height: 140, borderRadius: '50%', overflow: 'hidden', background: 'rgba(0,0,0,0.1)' }}>
-            {profile.avatarDataUrl ? (
-              <img src={profile.avatarDataUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            ) : (
-              <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: '#666' }}>No avatar</div>
-            )}
-          </div>
-          <div style={{ display: 'grid', gap: 10, flex: 1, minWidth: 280 }}>
-            {/* Nickname editable */}
-            {!editingNick ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div className="card-title" style={{ margin: 0 }}>{profile.nickname || 'Без имени'}</div>
-                <button className="search-button" onClick={() => { setEditingNick(true); setNickValue(profile.nickname || ''); }}>Изм.</button>
+    <div className="profile-wrapper">
+      <div className="profile-card-outer">
+        <div className="profile-left">
+          <h1 className="profile-heading">Профиль</h1>
+          <div className="profile-avatar-block">
+            <div className="avatar-circle">
+              {profile.avatarDataUrl ? (
+                <img src={profile.avatarDataUrl} alt="avatar" />
+              ) : (
+                <div className="avatar-placeholder">No avatar</div>
+              )}
+            </div>
+            <div className="profile-main-info">
+              {!editingNick ? (
+                <div className="nick-row">
+                  <h2 className="nick">{profile.nickname || 'User'}</h2>
+                  <button className="btn small" onClick={() => { setEditingNick(true); setNickValue(profile.nickname || ''); }}>Изм.</button>
+                </div>
+              ) : (
+                <div className="edit-row">
+                  <input className="input" value={nickValue} onChange={(e)=>setNickValue(e.target.value)} autoFocus placeholder="Ник" />
+                  <button className="btn small" onClick={()=>{ setProfile(p=>({...p,nickname:nickValue.trim()||p.nickname})); setEditingNick(false); }}>OK</button>
+                  <button className="btn ghost small" onClick={()=>setEditingNick(false)}>✕</button>
+                </div>
+              )}
+              {!editingBio ? (
+                <div className="bio-row">
+                  <p className="bio-text">{profile.bio || 'Добавьте описание профиля'}</p>
+                  <button className="btn tiny ghost" onClick={() => { setEditingBio(true); setBioValue(profile.bio || ''); }}>Изм.</button>
+                </div>
+              ) : (
+                <div className="edit-row">
+                  <input className="input" value={bioValue} onChange={(e)=>setBioValue(e.target.value)} placeholder="О себе" />
+                  <button className="btn small" onClick={()=>{ setProfile(p=>({...p,bio:bioValue.trim()})); setEditingBio(false); }}>OK</button>
+                  <button className="btn ghost small" onClick={()=>setEditingBio(false)}>✕</button>
+                </div>
+              )}
+              <div className="quick-buttons">
+                <label className="btn" style={{cursor:'pointer'}}>
+                  Сменить аватар
+                  <input ref={fileInputRef} type="file" accept="image/*" onChange={changeAvatar} style={{display:'none'}} />
+                </label>
+                <button className="btn" onClick={()=> window.location.hash = '#/my-music'}>Моя музыка</button>
+                <button className="btn" onClick={()=> window.location.hash = '#/playlists'}>Плейлисты</button>
               </div>
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <input className="search-input" value={nickValue} onChange={(e) => setNickValue(e.target.value)} placeholder="Никнейм" autoFocus />
-                <button className="search-button" onClick={() => { setProfile((p) => ({ ...p, nickname: nickValue.trim() || p.nickname })); setEditingNick(false); }}>Сохранить</button>
-                <button className="search-button" onClick={() => setEditingNick(false)}>Отмена</button>
-              </div>
-            )}
-
-            {/* Bio editable */}
-            {!editingBio ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div className="card-subtitle" style={{ margin: 0 }}>{profile.bio || 'Добавьте описание профиля'}</div>
-                <button className="search-button" onClick={() => { setEditingBio(true); setBioValue(profile.bio || ''); }}>Изм.</button>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
-                <input className="search-input" value={bioValue} onChange={(e) => setBioValue(e.target.value)} placeholder="О себе" style={{ flex: 1 }} />
-                <button className="search-button" onClick={() => { setProfile((p) => ({ ...p, bio: bioValue.trim() })); setEditingBio(false); }}>Сохранить</button>
-                <button className="search-button" onClick={() => setEditingBio(false)}>Отмена</button>
-              </div>
-            )}
-
-            <div className="muted-text" style={{ color: '#9e9e9e' }}>Дата регистрации: {formatDate(profile.registeredAt)}</div>
-
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
-              <label className="search-button" style={{ cursor: 'pointer' }}>
-                Сменить аватар
-                <input ref={fileInputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={changeAvatar} />
-              </label>
-              <button className="search-button" onClick={goMyMusic}>Моя музыка</button>
-              <button className="search-button" onClick={goPlaylists}>Плейлисты</button>
             </div>
           </div>
+          <div className="stats-grid">
+            <div className="stat-card"><span className="stat-label">Плейлисты</span><span className="stat-value">{stats.playlists}</span></div>
+            <div className="stat-card"><span className="stat-label">Загрузки</span><span className="stat-value">{stats.uploads}</span></div>
+            <div className="stat-card"><span className="stat-label">Опубликовано</span><span className="stat-value">{stats.published}</span></div>
+            <div className="stat-card"><span className="stat-label">Подписчики</span><span className="stat-value">{stats.followers}</span></div>
+            <div className="stat-card"><span className="stat-label">Подписки</span><span className="stat-value">{stats.following}</span></div>
+          </div>
+          <button className="btn primary wide" onClick={logout}>Выйти</button>
         </div>
-
-        {/* Stats */}
-        <div style={{ marginTop: 24, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
-          <div className="recommendation-card" style={{ padding: 12 }}>
-            <div className="card-title" style={{ marginBottom: 4 }}>Плейлисты</div>
-            <div className="card-subtitle">{stats.playlists}</div>
+        <div className="profile-right">
+          <h2 className="settings-heading">Настройки</h2>
+          <div className="settings-list">
+            <div className="settings-item">
+              <span className="icon">🔒</span>
+              <span className="si-label">Сменить пароль</span>
+              <button className="btn tiny ghost" disabled>...</button>
+            </div>
+            <div className="settings-item">
+              <span className="icon">🌐</span>
+              <span className="si-label">Язык интерфейса</span>
+              <button className="btn tiny ghost" disabled>RU</button>
+            </div>
+            <div className="settings-item toggle" onClick={()=>toggleSetting('darkMode')} role="button" tabIndex={0}>
+              <span className="icon">🌙</span>
+              <span className="si-label">Тема</span>
+              <div className={'switch'+(settings.darkMode?' on':'')}><div className="knob" /></div>
+            </div>
+            <div className="settings-item toggle" onClick={()=>toggleSetting('notifications')} role="button" tabIndex={0}>
+              <span className="icon">🔔</span>
+              <span className="si-label">Уведомления</span>
+              <div className={'switch'+(settings.notifications?' on':'')}><div className="knob" /></div>
+            </div>
+            <div className="settings-item danger" onClick={()=> alert('Удаление аккаунта (заглушка)')} role="button" tabIndex={0}>
+              <span className="icon">🗑️</span>
+              <span className="si-label">Удалить аккаунт</span>
+            </div>
           </div>
-          <div className="recommendation-card" style={{ padding: 12 }}>
-            <div className="card-title" style={{ marginBottom: 4 }}>Загрузки</div>
-            <div className="card-subtitle">{stats.uploads}</div>
-          </div>
-          <div className="recommendation-card" style={{ padding: 12 }}>
-            <div className="card-title" style={{ marginBottom: 4 }}>Опубликовано</div>
-            <div className="card-subtitle">{stats.published}</div>
-          </div>
-          <div className="recommendation-card" style={{ padding: 12 }}>
-            <div className="card-title" style={{ marginBottom: 4 }}>Избранное</div>
-            <div className="card-subtitle">{stats.favorites}</div>
-          </div>
-          <div className="recommendation-card" style={{ padding: 12 }}>
-            <div className="card-title" style={{ marginBottom: 4 }}>Подписки</div>
-            <div className="card-subtitle">{stats.following}</div>
-          </div>
-          <div className="recommendation-card" style={{ padding: 12 }}>
-            <div className="card-title" style={{ marginBottom: 4 }}>Подписчики</div>
-            <div className="card-subtitle">{stats.followers}</div>
-          </div>
-        </div>
-
-        {/* Footer actions */}
-        <div style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-end' }}>
-          <button className="auth-button" onClick={logout}>Выйти</button>
+          {/* Back button removed per request */}
         </div>
       </div>
     </div>

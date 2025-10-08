@@ -30,7 +30,17 @@ const RecommendationCard = ({ title, subtitle, imageUrl, onClick, audioUrl }) =>
   return (
     <div className="recommendation-card" onClick={onClick} role={onClick ? 'button' : undefined} tabIndex={onClick ? 0 : undefined}>
       <div className="card-image">
-        <img src={imageUrl} alt={title} />
+        <img 
+          src={imageUrl} 
+          alt={title} 
+          loading="lazy" 
+          decoding="async"
+          onError={(e) => {
+            if (e.currentTarget.src.indexOf('/placeholder.png') === -1) {
+              e.currentTarget.src = '/placeholder.png';
+            }
+          }}
+        />
         <button 
           className="card-play-button" 
           onClick={togglePlay}

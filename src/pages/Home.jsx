@@ -1,34 +1,44 @@
 import React, { useMemo, lazy, Suspense } from 'react';
 import RecommendationCard from '../components/RecommendationCard';
-import { playUrl } from '../lib/player';
+import { playUrl, playAlbum } from '../lib/player';
+import music from '../data/musicData';
 import './Home.css';
 
-// Lazy load images
-const LazyImage = ({ src, alt, className = '' }) => (
-  <img 
-    src={src} 
-    alt={alt} 
-    className={className}
-    loading="lazy"
-    decoding="async"
-  />
-);
+// Lazy load images with fallback handling
+const LazyImage = ({ src, alt, className = '' }) => {
+  const [currentSrc, setCurrentSrc] = React.useState(src);
+  React.useEffect(() => { setCurrentSrc(src); }, [src]);
+  return (
+    <img
+      src={currentSrc}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      decoding="async"
+      onError={() => {
+        if (currentSrc !== '/placeholder.png') {
+          setCurrentSrc('/placeholder.png');
+        }
+      }}
+    />
+  );
+};
 
 // ...existing code...
 
 // Sample data - will be replaced with API calls later
 const newReleaseOfTheWeek = {
-  id: 'week1',
-  title: 'New Album: Summer Hits 2025',
+  id: 'summer-hits-2025',
+  title: 'Summer Hits 2025',
   subtitle: 'The hottest tracks of the summer',
-  imageUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+  imageUrl: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80', // summer crowd / concert vibe
   type: 'Album',
   artist: 'Various Artists',
   audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
 };
 
 const popularTracks = [
-  { id: 'p1', title: 'Blinding Lights', artist: 'The Weeknd', plays: '125M', imageUrl: 'https://images.unsplash.com/photo-1465101178521-c1a6bca7a581?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { id: 'p1', title: 'Blinding Lights', artist: 'The Weeknd', plays: '125M', imageUrl: 'https://images.unsplash.com/photo-1511662114068-35b22cd1a418?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   { id: 'p2', title: 'Save Your Tears', artist: 'The Weeknd', plays: '98M', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
   { id: 'p3', title: 'Stay', artist: 'The Kid LAROI, Justin Bieber', plays: '87M', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
   { id: 'p4', title: 'Levitating', artist: 'Dua Lipa', plays: '76M', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
@@ -39,7 +49,7 @@ const popularTracks = [
   { id: 'p9', title: 'Kiss Me More', artist: 'Doja Cat', plays: '44M', imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
   { id: 'p10', title: 'Heat Waves', artist: 'Glass Animals', plays: '41M', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
   { id: 'p11', title: 'drivers license', artist: 'Olivia Rodrigo', plays: '39M', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
-  { id: 'p12', title: 'Good 4 U', artist: 'Olivia Rodrigo', plays: '36M', imageUrl: 'https://images.unsplash.com/photo-1465101178521-c1a6bca7a581?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
+  { id: 'p12', title: 'Good 4 U', artist: 'Olivia Rodrigo', plays: '36M', imageUrl: 'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
 ];
 
 const newReleases = [
@@ -47,9 +57,9 @@ const newReleases = [
   { id: 'n2', title: 'Midnight Thoughts', artist: 'Artist Two', date: '2025-09-14', imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
   { id: 'n3', title: 'Summer Vibes', artist: 'Artist Three', date: '2025-09-13', imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
   { id: 'n4', title: 'Lost in Tokyo', artist: 'DJ Sakura', date: '2025-09-12', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
-  { id: 'n5', title: 'Night Drive', artist: 'Synthwave', date: '2025-09-11', imageUrl: 'https://images.unsplash.com/photo-1465101178521-c1a6bca7a581?auto=format&fit=crop&w=1000&q=80' },
+  { id: 'n5', title: 'Night Drive', artist: 'Synthwave', date: '2025-09-11', imageUrl: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1000&q=80' },
   { id: 'n6', title: 'Golden Hour', artist: 'Sunset Crew', date: '2025-09-10', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n7', title: 'Rainy Days', artist: 'Cloudy Beats', date: '2025-09-09', imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80' },
+  { id: 'n7', title: 'Rainy Days', artist: 'Cloudy Beats', date: '2025-09-09', imageUrl: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1000&q=80' },
   { id: 'n8', title: 'Dreamscape', artist: 'Ambient Flow', date: '2025-09-08', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80' },
   { id: 'n9', title: 'Firefly', artist: 'Night Lights', date: '2025-09-07', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80' },
   { id: 'n10', title: 'Echoes', artist: 'Reverb', date: '2025-09-06', imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1000&q=80' },
@@ -77,32 +87,98 @@ const recommendations = [
     id: 1,
     title: 'Ariana Grande',
     subtitle: 'Ariana Grande',
-    imageUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    // Pop diva / stage lighting
+    imageUrl: 'https://images.unsplash.com/photo-1518976024611-4881d58c1c91?auto=format&fit=crop&w=1000&q=80',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
   },
   {
     id: 2,
     title: 'TOP 100 Hits',
     subtitle: 'Alejano',
-    imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    // Crowd / festival energy
+    imageUrl: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=1000&q=80',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
   },
   {
     id: 3,
     title: 'Urban Mix',
     subtitle: 'Carrie Underwood',
-    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    // City night / urban vibe
+    imageUrl: 'https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=1000&q=80',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
   },
-  { id: 4, title: 'Lo-Fi Chill', subtitle: 'Beats & Coffee', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-  { id: 5, title: 'Electro House', subtitle: 'DJ Pulse', imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
-  { id: 6, title: 'Indie Folk', subtitle: 'The Wanderers', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-  { id: 7, title: 'Chillhop', subtitle: 'Beatsmith', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-  { id: 8, title: 'Ambient Waves', subtitle: 'Sleep Sound', imageUrl: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
-  { id: 9, title: 'Rock Anthems', subtitle: 'Stadium', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-  { id: 10, title: 'Classical Calm', subtitle: 'Orchestra', imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
-  { id: 11, title: 'Bedroom Pop', subtitle: 'Soft Echo', imageUrl: 'https://images.unsplash.com/photo-1465101178521-c1a6bca7a581?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
-  { id: 12, title: 'Global Beats', subtitle: 'WorldMix', imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
+  {
+    id: 4,
+    title: 'Lo-Fi Chill',
+    subtitle: 'Beats & Coffee',
+    // Cozy desk / chill work ambience
+    imageUrl: 'https://images.unsplash.com/photo-1490135900376-2e86d918a23d?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
+  },
+  {
+    id: 5,
+    title: 'Electro House',
+    subtitle: 'DJ Pulse',
+    // Neon lights / DJ deck
+    imageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'
+  },
+  {
+    id: 6,
+    title: 'Indie Folk',
+    subtitle: 'The Wanderers',
+    // Acoustic guitar / nature
+    imageUrl: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3'
+  },
+  {
+    id: 7,
+    title: 'Chillhop',
+    subtitle: 'Beatsmith',
+    // Vinyl / warm tones
+    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'
+  },
+  {
+    id: 8,
+    title: 'Ambient Waves',
+    subtitle: 'Sleep Sound',
+    // Abstract calm gradient water
+    imageUrl: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'
+  },
+  {
+    id: 9,
+    title: 'Rock Anthems',
+    subtitle: 'Stadium',
+    // Guitar performance / stage
+    imageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
+  },
+  {
+    id: 10,
+    title: 'Classical Calm',
+    subtitle: 'Orchestra',
+    // Piano / classical instrument
+    imageUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'
+  },
+  {
+    id: 11,
+    title: 'Bedroom Pop',
+    subtitle: 'Soft Echo',
+    // Soft pastel cozy room
+    imageUrl: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3'
+  },
+  {
+    id: 12,
+    title: 'Global Beats',
+    subtitle: 'WorldMix',
+    // Cultural / world percussion vibe
+    imageUrl: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1000&q=80',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3'
+  },
 ];
 
 const Home = () => {
@@ -228,20 +304,50 @@ const Home = () => {
   return (
     <div className="home">
       {/* New Release of the Week Banner */}
-      <section className="banner">
+      <section
+        className="banner"
+        role="group"
+        aria-label={`New Release: ${newReleaseOfTheWeek.title}`}
+        onClick={() => { window.location.hash = `#/album/${newReleaseOfTheWeek.id}`; }}
+        tabIndex={0}
+        onKeyDown={(e)=>{ if(e.key==='Enter' || e.key===' '){ window.location.hash = `#/album/${newReleaseOfTheWeek.id}`; } }}
+        style={{cursor:'pointer'}}
+      >
         <div className="banner-content">
           <span className="banner-tag">New Release</span>
           <h2>{newReleaseOfTheWeek.title}</h2>
           <p className="banner-subtitle">{newReleaseOfTheWeek.subtitle}</p>
-          <button className="play-button" onClick={() => { if (newReleaseOfTheWeek.audioUrl) playUrl(newReleaseOfTheWeek.audioUrl); }}>Play Now</button>
+          <div style={{display:'flex', gap:12, flexWrap:'wrap'}}>
+            <button
+              className="play-button"
+              onClick={(e) => { 
+                e.stopPropagation(); 
+                // Attempt to find full album in data for queue play
+                try {
+                  const alb = music.albumData?.[newReleaseOfTheWeek.id];
+                  if (alb) {
+                    playAlbum(alb, 0);
+                  } else if (newReleaseOfTheWeek.audioUrl) {
+                    playUrl(newReleaseOfTheWeek.audioUrl, { id: newReleaseOfTheWeek.id, title: newReleaseOfTheWeek.title, artist: newReleaseOfTheWeek.artist, imageUrl: newReleaseOfTheWeek.imageUrl });
+                  }
+                } catch { /* fallback ignored */ }
+              }}
+            >Play</button>
+            <button
+              className="play-button ghost"
+              style={{background:'rgba(255,255,255,0.18)'}}
+              onClick={(e) => { e.stopPropagation(); window.location.hash = `#/album/${newReleaseOfTheWeek.id}`; }}
+            >Open Album</button>
+          </div>
         </div>
-        <div className="banner-image">
-          <LazyImage 
-            src={newReleaseOfTheWeek.imageUrl} 
-            alt={newReleaseOfTheWeek.title} 
+        <div className="banner-image" aria-hidden="true">
+          <LazyImage
+            src={newReleaseOfTheWeek.imageUrl}
+            alt={newReleaseOfTheWeek.title}
           />
         </div>
       </section>
+
 
       {/* Recommendations Section */}
       <section className="section">
@@ -259,6 +365,80 @@ const Home = () => {
         <HorizontalScroller id="popular-scroll">
           {popularTracksList}
         </HorizontalScroller>
+      </section>
+
+      {/* Split Dual Theme Banner (moved after Popular Now, images updated) */}
+      <section className="split-banner" aria-label="Featured themes">
+        <div
+          className="split-panel left"
+          role="group"
+          aria-label="Lo-Fi Chill"
+          onClick={()=>{ window.location.hash = '#/album/lo-fi-chill'; }}
+          tabIndex={0}
+          onKeyDown={(e)=>{ if(e.key==='Enter' || e.key===' '){ window.location.hash = '#/album/lo-fi-chill'; } }}
+        >
+          <div className="panel-overlay" />
+          <div className="panel-content">
+            <span className="panel-tag">Chill Mood</span>
+            <h3 className="panel-title">Lo‑Fi Chill</h3>
+            <p className="panel-subtitle">Beats & Coffee · Focus · Relax · Night coding</p>
+            <div className="panel-actions">
+              <button
+                className="play-button small"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  try {
+                    const alb = music.albumData?.['lo-fi-chill'];
+                    if (alb) {
+                      playAlbum(alb, 0);
+                    } else window.location.hash = '#/album/lo-fi-chill';
+                  } catch { window.location.hash = '#/album/lo-fi-chill'; }
+                }}
+              >Play</button>
+              <button className="play-button ghost" onClick={(e) => { e.stopPropagation(); window.location.hash = '#/album/lo-fi-chill'; }}>Album</button>
+            </div>
+          </div>
+          <LazyImage
+            className="panel-bg"
+            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1400&q=80" /* cozy cafe / work */
+            alt="Lo-Fi Chill background"
+          />
+        </div>
+        <div
+          className="split-panel right"
+          role="group"
+          aria-label="Top 100 Hits"
+          onClick={()=>{ window.location.hash = '#/album/top-100-hits'; }}
+          tabIndex={0}
+          onKeyDown={(e)=>{ if(e.key==='Enter' || e.key===' '){ window.location.hash = '#/album/top-100-hits'; } }}
+        >
+          <div className="panel-overlay" />
+            <div className="panel-content">
+              <span className="panel-tag alt">Top Charts</span>
+              <h3 className="panel-title">Top 100 Hits</h3>
+              <p className="panel-subtitle">Alejano · Energy · Trending · Daily mix</p>
+              <div className="panel-actions">
+                <button
+                  className="play-button small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    try {
+                      const alb = music.albumData?.['top-100-hits'];
+                      if (alb) {
+                        playAlbum(alb, 0);
+                      } else window.location.hash = '#/album/top-100-hits';
+                    } catch { window.location.hash = '#/album/top-100-hits'; }
+                  }}
+                >Play</button>
+                <button className="play-button ghost" onClick={(e) => { e.stopPropagation(); window.location.hash = '#/album/top-100-hits'; }}>Album</button>
+              </div>
+            </div>
+            <LazyImage
+              className="panel-bg"
+              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80" /* vibrant stage lighting */
+              alt="Top 100 background"
+            />
+        </div>
       </section>
 
       {/* New Releases Section */}
