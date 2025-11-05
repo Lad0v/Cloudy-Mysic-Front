@@ -19,6 +19,7 @@ const PlayerBar = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const LOVED_KEY = 'cloudy_liked_tracks';
+  const PLAYLISTS_KEY = 'cloudy_playlists';
   const RECENTS_KEY = 'cloudy_recent_tracks';
 
   // Current metadata will be provided by singleton player
@@ -41,6 +42,68 @@ const PlayerBar = () => {
       setIsLiked(arr.some((t) => t.id === currentMeta?.id));
     } catch {}
   }, [currentMeta]);
+
+  // Helpers to sync Like with Favorites playlist in localStorage
+  const loadPlaylists = () => {
+    try {
+      const raw = localStorage.getItem(PLAYLISTS_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const savePlaylists = (items) => {
+    try { localStorage.setItem(PLAYLISTS_KEY, JSON.stringify(items)); } catch {}
+  };
+
+  const ensureFavorites = (items) => {
+    const idx = items.findIndex(p => p.id === 'fav');
+    if (idx === -1) {
+      const fav = {
+        id: 'fav',
+        name: 'Любимое',
+        createdAt: Date.now(),
+        imageUrl: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80',
+        tracks: [],
+      };
+      return [...items, fav];
+    }
+    // make sure tracks array exists
+    if (!Array.isArray(items[idx].tracks)) {
+      const copy = items.slice();
+      copy[idx] = { ...copy[idx], tracks: [] };
+      return copy;
+    }
+    return items;
+  };
+
+  const addToFavorites = (track) => {
+    if (!track?.id) return;
+    let items = ensureFavorites(loadPlaylists());
+    const idx = items.findIndex(p => p.id === 'fav');
+    const fav = items[idx];
+    // avoid duplicates by id
+    const exists = fav.tracks?.some(t => t.id === track.id);
+    if (!exists) {
+      const nextFav = { ...fav, tracks: [{ ...track, addedAt: Date.now() }, ...(fav.tracks || [])] };
+      items = items.slice();
+      items[idx] = nextFav;
+      savePlaylists(items);
+    }
+  };
+
+  const removeFromFavorites = (trackId) => {
+    if (!trackId) return;
+    let items = ensureFavorites(loadPlaylists());
+    const idx = items.findIndex(p => p.id === 'fav');
+    const fav = items[idx];
+    const nextFav = { ...fav, tracks: (fav.tracks || []).filter(t => t.id !== trackId) };
+    items = items.slice();
+    items[idx] = nextFav;
+    savePlaylists(items);
+  };
 
   // local refs for progress/volume UI (player drives audio element)
   const audioRef = useRef(null);
@@ -159,8 +222,12 @@ const PlayerBar = () => {
                   let next;
                   if (exists) {
                     next = arr.filter((t) => t.id !== currentMeta?.id);
+                    // sync: remove from Favorites playlist as well
+                    removeFromFavorites(currentMeta?.id);
                   } else {
                     next = [{ id: currentMeta?.id, title: currentMeta?.title, artist: currentMeta?.artist, imageUrl: currentMeta?.imageUrl, likedAt: Date.now() }, ...arr];
+                    // sync: add to Favorites playlist
+                    addToFavorites({ id: currentMeta?.id, title: currentMeta?.title, artist: currentMeta?.artist, imageUrl: currentMeta?.imageUrl });
                   }
                   localStorage.setItem(LOVED_KEY, JSON.stringify(next));
                 } catch {}

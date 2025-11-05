@@ -16,11 +16,14 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/* Ensure the page itself never scrolls; only the in-app container does */
+html, body, #root { height: 100%; overflow: hidden; }
+
 body {
   margin: 0;
   padding: 0;
   color: #333;
-  height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background-color: #0d1017; /* darker base to align with album/playlist pages */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -49,13 +52,9 @@ body {
   display: grid;
   grid-template-columns: 240px 1fr;
   grid-template-rows: 1fr auto;
-  height: 100vh;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  gap: 8px; /* use grid gap instead of child margins to avoid outer overflow */
+  position: fixed; /* cover the entire viewport to hide any outer page gutter */
+  inset: 0;      /* top:0 right:0 bottom:0 left:0 */
   background-color: #0A88A6;
 }
 
@@ -72,7 +71,7 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0 16px 0 0;
-  margin: 8px 0 0 8px;
+  margin: 0; /* margins replaced by grid gap */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
@@ -116,9 +115,9 @@ body {
 }
 
 .nav-icon {
-  margin-right: 12px;
+  margin-inline-end: 12px;
   font-size: 20px;
-  width: 24px;
+  inline-size: 24px;
   text-align: center;
 }
 
@@ -137,7 +136,7 @@ body {
   overflow: hidden; /* keep overlay fixed and let inner container scroll */
   position: relative;
   border-radius: 16px 0 0 0;
-  margin: 8px 8px 0 0;
+  margin: 0; /* margins replaced by grid gap */
   background: url('../public/Background ver 3.png') no-repeat center center;
   background-size: cover;
 }
@@ -166,18 +165,84 @@ body {
 .main-scroll {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden; /* prevent accidental horizontal overflow that can show as a right-side stripe */
+  /* Use overlay-like, transparent scrollbar styling to avoid visible dark gutter */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255,255,255,0.35) transparent; /* Firefox */
   /* Prevent content from hiding under the PlayerBar */
   padding-bottom: 100px;
 }
+
+/* Chrome/Edge scrollbar styling for the main content scroll only */
+.main-scroll::-webkit-scrollbar { width: 10px; }
+.main-scroll::-webkit-scrollbar-track { background: transparent; }
+.main-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 8px;
+  border: 2px solid transparent; /* create breathing room */
+  background-clip: padding-box;
+}
+.main-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.45); }
 
 .main-content h1 {
   font-size: 28px;
   margin-bottom: 24px;
   color: white;
+  padding-inline: 16px; /* small side indent for page titles across pages */
 }
+
+/* Small side indent for section titles across pages (e.g., My Music: Загрузки/Альбомы/Опубликовано) */
+.main-scroll > section > h2 { padding-inline: 16px; }
 
 /* Search page */
 .search-page {}
+
+/* Upload actions (My Music): equal button sizing on desktop and compact '+' on phones */
+.upload-actions { display:inline-flex; gap: 8px; align-items:center; flex-wrap: wrap; }
+.upload-actions .upload-btn {
+  justify-content: center;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 10px 14px;           /* slightly tighter padding to reduce length */
+  max-inline-size: 160px;        /* cap width so labels don’t get too long */
+}
+.upload-actions .upload-btn .btn-label { display:inline; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.upload-actions .upload-btn .btn-short { display:none; }
+
+@media (max-width: 700px) {
+  /* Reflow the My Music dropzone to a vertical stack so buttons don't drift off-screen */
+  .upload-dropzone {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 16px !important;
+  }
+
+  .upload-actions { display:grid; grid-template-columns: repeat(2, max-content); justify-content: end; gap: 10px; }
+  .upload-actions .upload-btn {
+    inline-size: 36px;
+    block-size: 36px;
+    border-radius: 12px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+  .upload-actions .upload-btn .btn-label { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .upload-actions .upload-btn .btn-short { display:block; font-size: 16px; line-height: 1; }
+  .upload-actions { justify-content: center; grid-template-columns: repeat(2, 36px); }
+  .upload-actions { align-self: center; }
+  .upload-actions .upload-btn::after { content: attr(data-label); display: block; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-size: 10px; color: rgba(255,255,255,0.9); margin-top: 3px; white-space: nowrap; }
+}
+
+/* Ensure My Music titles have side padding on phones explicitly */
+@media (max-width: 700px) {
+  .my-music-page > h1,
+  .my-music-page > section > h2 { padding-inline: 16px; }
+}
 
 .search-form {
   display: flex;
@@ -229,6 +294,21 @@ body {
 /* Filters button next to search */
 .filters-button {
   background: rgba(78, 168, 222, 0.85);
+}
+
+/* Compact icon-style filters button next to search */
+.search-form .filters-button {
+  padding: 0;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  line-height: 0;
+}
+.search-form .filters-button svg { inline-size: 18px; block-size: 18px; display: block; }
+@media (max-width: 480px) {
+  .search-form .filters-button { inline-size: 36px; block-size: 36px; }
 }
 
 /* Filters overlay and panel */
@@ -520,7 +600,7 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0 0 16px 0;
-  margin-right: 8px;
+  margin: 0; /* margins replaced by grid gap */
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.2);
   color: #fff;
 }
@@ -740,6 +820,10 @@ body {
   position: relative;
   overflow: hidden;
   transition: height 0.2s ease;
+  
+  /* Small side indent for page/section titles on mobile across pages */
+  .main-content h1 { padding-inline: 16px; }
+  .main-scroll > section > h2 { padding-inline: 16px; }
 }
 
 .volume-bar:hover {
@@ -773,7 +857,7 @@ body {
   }
 
   .nav-icon {
-    margin-right: 0;
+    margin-inline-end: 0;
     font-size: 24px;
   }
 
@@ -789,7 +873,7 @@ body {
   }
 
   .player-bar {
-    padding: 8px 16px;
+    grid-row: 3; /* move nav under the player */
   }
 
   .track-title,
@@ -801,6 +885,62 @@ body {
     width: 48px;
     height: 48px;
   }
+}
+
+/* Mobile layout: bottom nav + bottom player */
+@media (max-width: 700px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto auto; /* content, player, bottom nav */
+    gap: 0 8px; /* no vertical gap between rows; keep horizontal gap */
+    padding-block-end: env(safe-area-inset-bottom);
+  }
+  .sidebar {
+    grid-column: 1;
+    grid-row: 3;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* center the nav */
+    padding: 6px 6px;
+  padding-block-end: env(safe-area-inset-bottom);
+    margin: 0;
+    border-radius: 0;
+    background-color: rgba(30, 30, 45, 0.96);
+    box-shadow: 0 -6px 28px rgba(0,0,0,0.28);
+  }
+  .logo { display: none; }
+  .nav-menu { flex: 0 1 auto; display: flex; flex-direction: row; justify-content: center; padding: 0; gap: 12px; }
+  .nav-link { justify-content: center; padding: 8px 10px; border-radius: 10px; }
+  .nav-link span { display: none; }
+  .nav-icon { margin-inline-end: 0; font-size: 22px; inline-size: 24px; }
+  .profile-section { margin-block-start: 0; padding: 0; border-block-start: none; }
+  .profile-section .nav-link { padding: 8px 10px; }
+  /* Place profile link inline with main nav for perfect centering */
+  .profile-section { display: contents; }
+
+  .main-content { border-radius: 0; margin: 0; padding: 12px 0; }
+  .main-scroll { padding-block-end: calc(200px + env(safe-area-inset-bottom)); } /* leave room for player + nav */
+
+  .player-bar {
+    grid-column: 1;
+    grid-row: 2; /* show player above the bottom nav */
+    margin: 0; /* no extra spacing above or below on mobile */
+    border-radius: 0;
+    padding: 6px 8px;
+    gap: 6px;
+    z-index: 100; /* keep above nav */
+  }
+  .now-playing { inline-size: auto; min-inline-size: 0; }
+  .album-art { inline-size: 40px; block-size: 40px; margin-inline-end: 8px; }
+  /* Show track title on mobile, hide artist */
+  .player-bar .track-title { display: block !important; font-size: 12px; }
+  .player-bar .track-artist { display: none !important; }
+  .player-controls { flex: 0 0 auto; padding: 0; max-inline-size: none; }
+  .control-buttons { gap: 10px; margin-block-end: 0; }
+  .progress-container { display: none; }
+  .volume-control { display: none; }
+  .control-button { padding: 6px; font-size: 14px; }
+  .play-button { inline-size: 64px; block-size: 34px; }
 }
 
 /* Auth/Profile pages */

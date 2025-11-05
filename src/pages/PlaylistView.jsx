@@ -64,7 +64,25 @@ export default function PlaylistView() {
       </div>
       <div className="playlist-view-tracks">
         <h3 className="album-tracks-heading">Треки плейлиста</h3>
-        <div className="muted-text">Пока заглушка: треки не сохранены в структуре плейлиста. Добавить поле tracks[] позже.</div>
+        {Array.isArray(playlist.tracks) && playlist.tracks.length > 0 ? (
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 10 }}>
+            {playlist.tracks.map((t) => (
+              <li key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.06)' }}>
+                {t.imageUrl ? (
+                  <img src={t.imageUrl} alt={t.title} style={{ inlineSize: 40, blockSize: 40, borderRadius: 6, objectFit: 'cover' }} />
+                ) : (
+                  <div style={{ inlineSize: 40, blockSize: 40, borderRadius: 6, background: 'rgba(255,255,255,0.1)', display: 'grid', placeItems: 'center', color: '#ddd', fontSize: 10 }}>Track</div>
+                )}
+                <div style={{ minInlineSize: 0, flex: 1 }}>
+                  <div className="card-title" style={{ margin: 0 }}>{t.title}</div>
+                  <div className="card-subtitle" style={{ margin: 0 }}>{t.artist || '—'}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="muted-text">Пока нет треков в этом плейлисте.</div>
+        )}
       </div>
     </div>
   );

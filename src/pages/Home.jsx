@@ -3,6 +3,7 @@ import RecommendationCard from '../components/RecommendationCard';
 import { playUrl, playAlbum } from '../lib/player';
 import music from '../data/musicData';
 import './Home.css';
+import './Home.mobile.css';
 
 // Lazy load images with fallback handling
 const LazyImage = ({ src, alt, className = '' }) => {

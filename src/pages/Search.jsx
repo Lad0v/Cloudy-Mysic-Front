@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaFilter } from 'react-icons/fa';
 
 // Stubbed API call to a different service
 // async function fetchOtherApi(query) {
@@ -138,8 +139,10 @@ export default function Search() {
           className="search-button filters-button"
           onClick={openFilters}
           aria-expanded={showFilters}
+          aria-label="Фильтры"
+          title="Фильтры"
         >
-          Фильтры
+          <FaFilter aria-hidden="true" />
         </button>
       </form>
 

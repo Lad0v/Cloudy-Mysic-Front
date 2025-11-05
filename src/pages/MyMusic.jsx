@@ -135,7 +135,10 @@ export default function MyMusic() {
 
     // Create upload items linked to this album
     const newItems = audioFiles.map((file, idx) => {
-      const url = URL.createObjectURL(file);
+      let url = '';
+      try {
+        url = URL.createObjectURL(file);
+      } catch {}
       revokeQueueRef.current.push(url);
       return {
         id: `${now}_${idx}_${Math.random().toString(36).slice(2)}`,
@@ -146,13 +149,15 @@ export default function MyMusic() {
         status: 'processing',
         url,
         albumId,
-        coverUrl: '',
+        coverUrl: ''
       };
     });
 
+    // Add new items to uploads list
     setUploads((prev) => [...newItems, ...prev]);
   }, []);
 
+  // Handle drop of files onto the dropzone
   const onDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -290,9 +295,27 @@ export default function MyMusic() {
             <div style={{ fontSize: 18, fontWeight: 600 }}>Загрузите треки</div>
             <div className="muted-text">Перетащите файлы сюда или выберите на устройстве. Поддерживаются аудио-файлы.</div>
           </div>
-          <div>
-            <button className="search-button" onClick={onPickFiles}>Выбрать файлы</button>
-            <button className="search-button" style={{ marginLeft: 8 }} onClick={onPickAlbum}>Загрузить альбом (папку)</button>
+          <div className="upload-actions">
+            <button
+              type="button"
+              className="search-button upload-btn files"
+              onClick={onPickFiles}
+              aria-label="Выбрать файлы (музыка)"
+              data-label="Музыка"
+            >
+              <span className="btn-short" aria-hidden="true">♪</span>
+              <span className="btn-label">Выбрать файлы</span>
+            </button>
+            <button
+              type="button"
+              className="search-button upload-btn album"
+              onClick={onPickAlbum}
+              aria-label="Загрузить альбом (папку)"
+              data-label="Альбом"
+            >
+              <span className="btn-short" aria-hidden="true">📁</span>
+              <span className="btn-label">Загрузить альбом (папку)</span>
+            </button>
             <input
               ref={inputRef}
               type="file"

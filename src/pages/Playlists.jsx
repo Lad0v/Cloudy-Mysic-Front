@@ -25,7 +25,7 @@ export default function Playlists() {
     const fromStorage = loadPlaylists();
     return (
       fromStorage ?? [
-        { id: 'fav', name: 'Любимое', createdAt: Date.now(), imageUrl: FAVORITE_DEFAULT_IMAGE },
+        { id: 'fav', name: 'Любимое', createdAt: Date.now(), imageUrl: FAVORITE_DEFAULT_IMAGE, tracks: [] },
       ]
     );
   });

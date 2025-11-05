@@ -396,44 +396,4 @@
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
-  .banner {
-    flex-direction: column;
-    block-size: auto;
-  }
-  
-  .banner-image {
-    position: relative;
-    inline-size: 100%;
-    block-size: 200px;
-  }
-  
-  .banner-content {
-    padding: 25px;
-  }
-  
-  .banner h2 {
-    font-size: 28px;
-  }
-  
-  .tracks-grid,
-  .recommendations-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .home {
-    padding: 15px;
-  }
-  
-  .tracks-grid,
-  .recommendations-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .section-title {
-    font-size: 20px;
-  }
-}
+/* phone-specific rules moved to Home.mobile.css */

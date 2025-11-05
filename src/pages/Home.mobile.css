@@ -1,0 +1,75 @@
+/* Mobile-only styles extracted from Home.css */
+
+/* Tablet breakpoint */
+@media (max-width: 768px) {
+  .home { padding-inline: 0; }
+  .horizontal-scroll { padding: 8px 0; }
+  .scroll-btn { display: none; }
+  /* add a small side indent for section titles */
+  .section-title { padding-inline: 16px; }
+  .banner {
+    flex-direction: column;
+    block-size: auto;
+    margin-inline: 16px; /* keep side margins for banners on mobile */
+  }
+  .split-banner { margin-inline: 16px; }
+  .banner-image {
+    position: relative;
+    inline-size: 100%;
+    block-size: 200px;
+    order: 1; /* show image on top */
+  }
+  .banner-content { padding: 25px; order: 2; }
+  .banner h2 { font-size: 28px; }
+  .tracks-grid,
+  .recommendations-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+}
+
+/* Phone breakpoint */
+@media (max-width: 480px) {
+  .home { padding: 15px 0; } /* remove side padding so lists touch edges */
+  .banner { margin-inline: 12px; }
+  .split-banner { margin-inline: 12px; }
+  .tracks-grid,
+  .recommendations-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-title { font-size: 20px; }
+  .section-title { padding-inline: 12px; } /* lighter indent on smaller phones */
+  /* Let horizontal lists touch the edges */
+  .horizontal-scroll { padding: 8px 0; }
+}
+
+/* Ultra compact phone refinements */
+@media (max-width: 420px) {
+  .banner { margin-inline: 10px; }
+  .split-banner { margin-inline: 10px; }
+  .section-title { padding-inline: 10px; }
+  .banner-content { padding: 20px 18px 22px; }
+  .banner h2 { font-size: 24px; }
+  .banner-subtitle { font-size: 14px; margin-block-end: 18px; }
+  .play-button, .play-button.ghost { padding: 10px 22px; font-size: 14px; }
+  .split-banner { gap: 14px; margin-block-end: 36px; }
+  .panel-content { padding: 18px 18px 20px; }
+  .panel-title { font-size: 20px; }
+  .panel-subtitle { font-size: 12.5px; max-inline-size: 260px; }
+  .panel-actions { gap: 8px; }
+  .play-button.small { padding: 8px 18px; font-size: 13px; }
+  .horizontal-scroll { padding: 8px 0; gap: 12px; }
+  /* Remove side padding entirely for ultra-compact */
+  .horizontal-scroll { padding-inline: 0; }
+  .horizontal-scroll > .recommendation-card, .horizontal-scroll > .track-card { min-inline-size: 160px; max-inline-size: 180px; }
+  .scroll-btn { display: none; }
+  .recommendations-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+
+/* Very small devices */
+@media (max-width: 360px) {
+  .section-title { padding-inline: 8px; }
+  .banner h2 { font-size: 22px; }
+  .play-button, .play-button.ghost { padding: 9px 18px; font-size: 13px; }
+  .panel-title { font-size: 18px; }
+  .panel-subtitle { font-size: 12px; }
+  .recommendations-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .home { padding: 12px 10px; }
+  .section-title { font-size: 18px; }
+  .panel-content { padding: 16px 16px 18px; }
+}
