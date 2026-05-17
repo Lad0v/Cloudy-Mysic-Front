@@ -32,55 +32,55 @@ const newReleaseOfTheWeek = {
   id: 'summer-hits-2025',
   title: 'Summer Hits 2025',
   subtitle: 'The hottest tracks of the summer',
-  imageUrl: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80', // summer crowd / concert vibe
+  imageUrl: '/images/concert-crowd-summer.jpg', // summer crowd / concert vibe
   type: 'Album',
   artist: 'Various Artists',
   audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
 };
 
 const popularTracks = [
-  { id: 'p1', title: 'Blinding Lights', artist: 'The Weeknd', plays: '125M', imageUrl: 'https://images.unsplash.com/photo-1511662114068-35b22cd1a418?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-  { id: 'p2', title: 'Save Your Tears', artist: 'The Weeknd', plays: '98M', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-  { id: 'p3', title: 'Stay', artist: 'The Kid LAROI, Justin Bieber', plays: '87M', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-  { id: 'p4', title: 'Levitating', artist: 'Dua Lipa', plays: '76M', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-  { id: 'p5', title: 'Watermelon Sugar', artist: 'Harry Styles', plays: '65M', imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
-  { id: 'p6', title: 'Peaches', artist: 'Justin Bieber', plays: '59M', imageUrl: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-  { id: 'p7', title: 'Montero', artist: 'Lil Nas X', plays: '54M', imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-  { id: 'p8', title: 'Bad Habits', artist: 'Ed Sheeran', plays: '48M', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
-  { id: 'p9', title: 'Kiss Me More', artist: 'Doja Cat', plays: '44M', imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-  { id: 'p10', title: 'Heat Waves', artist: 'Glass Animals', plays: '41M', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
-  { id: 'p11', title: 'drivers license', artist: 'Olivia Rodrigo', plays: '39M', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
-  { id: 'p12', title: 'Good 4 U', artist: 'Olivia Rodrigo', plays: '36M', imageUrl: 'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
+  { id: 'p1', title: 'Blinding Lights', artist: 'The Weeknd', plays: '125M', imageUrl: '/images/neon-alley.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { id: 'p2', title: 'Save Your Tears', artist: 'The Weeknd', plays: '98M', imageUrl: '/images/rainy-neon-street.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+  { id: 'p3', title: 'Stay', artist: 'The Kid LAROI, Justin Bieber', plays: '87M', imageUrl: '/images/forest-green.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+  { id: 'p4', title: 'Levitating', artist: 'Dua Lipa', plays: '76M', imageUrl: '/images/concert-stage-smoke.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+  { id: 'p5', title: 'Watermelon Sugar', artist: 'Harry Styles', plays: '65M', imageUrl: '/images/golden-beach.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
+  { id: 'p6', title: 'Peaches', artist: 'Justin Bieber', plays: '59M', imageUrl: '/images/sunset-beach.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
+  { id: 'p7', title: 'Montero', artist: 'Lil Nas X', plays: '54M', imageUrl: '/images/rainy-neon-street.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
+  { id: 'p8', title: 'Bad Habits', artist: 'Ed Sheeran', plays: '48M', imageUrl: '/images/neon-alley.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+  { id: 'p9', title: 'Kiss Me More', artist: 'Doja Cat', plays: '44M', imageUrl: '/images/concert-stage-smoke.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
+  { id: 'p10', title: 'Heat Waves', artist: 'Glass Animals', plays: '41M', imageUrl: '/images/ocean-waves.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
+  { id: 'p11', title: 'drivers license', artist: 'Olivia Rodrigo', plays: '39M', imageUrl: '/images/rainy-window.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
+  { id: 'p12', title: 'Good 4 U', artist: 'Olivia Rodrigo', plays: '36M', imageUrl: '/images/guitar-closeup.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
 ];
 
 const newReleases = [
-  { id: 'n1', title: 'New Beginnings', artist: 'Artist One', date: '2025-09-15', imageUrl: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-  { id: 'n2', title: 'Midnight Thoughts', artist: 'Artist Two', date: '2025-09-14', imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
-  { id: 'n3', title: 'Summer Vibes', artist: 'Artist Three', date: '2025-09-13', imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
-  { id: 'n4', title: 'Lost in Tokyo', artist: 'DJ Sakura', date: '2025-09-12', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
-  { id: 'n5', title: 'Night Drive', artist: 'Synthwave', date: '2025-09-11', imageUrl: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n6', title: 'Golden Hour', artist: 'Sunset Crew', date: '2025-09-10', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n7', title: 'Rainy Days', artist: 'Cloudy Beats', date: '2025-09-09', imageUrl: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n8', title: 'Dreamscape', artist: 'Ambient Flow', date: '2025-09-08', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n9', title: 'Firefly', artist: 'Night Lights', date: '2025-09-07', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n10', title: 'Echoes', artist: 'Reverb', date: '2025-09-06', imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n11', title: 'Sunrise', artist: 'Morning Sound', date: '2025-09-05', imageUrl: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80' },
-  { id: 'n12', title: 'Blue Skies', artist: 'Skyline', date: '2025-09-04', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80' },
+  { id: 'n1', title: 'New Beginnings', artist: 'Artist One', date: '2025-09-15', imageUrl: '/images/forest-aerial.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
+  { id: 'n2', title: 'Midnight Thoughts', artist: 'Artist Two', date: '2025-09-14', imageUrl: '/images/rainy-window.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
+  { id: 'n3', title: 'Summer Vibes', artist: 'Artist Three', date: '2025-09-13', imageUrl: '/images/golden-beach.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
+  { id: 'n4', title: 'Lost in Tokyo', artist: 'DJ Sakura', date: '2025-09-12', imageUrl: '/images/rainy-neon-street.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
+  { id: 'n5', title: 'Night Drive', artist: 'Synthwave', date: '2025-09-11', imageUrl: '/images/neon-reflection.jpg' },
+  { id: 'n6', title: 'Golden Hour', artist: 'Sunset Crew', date: '2025-09-10', imageUrl: '/images/sunset-beach.jpg' },
+  { id: 'n7', title: 'Rainy Days', artist: 'Cloudy Beats', date: '2025-09-09', imageUrl: '/images/rainy-window.jpg' },
+  { id: 'n8', title: 'Dreamscape', artist: 'Ambient Flow', date: '2025-09-08', imageUrl: '/images/ocean-waves.jpg' },
+  { id: 'n9', title: 'Firefly', artist: 'Night Lights', date: '2025-09-07', imageUrl: '/images/forest-green.jpg' },
+  { id: 'n10', title: 'Echoes', artist: 'Reverb', date: '2025-09-06', imageUrl: '/images/neon-alley.jpg' },
+  { id: 'n11', title: 'Sunrise', artist: 'Morning Sound', date: '2025-09-05', imageUrl: '/images/golden-beach.jpg' },
+  { id: 'n12', title: 'Blue Skies', artist: 'Skyline', date: '2025-09-04', imageUrl: '/images/forest-aerial.jpg' },
 ];
 
 const userMusic = [
-  { id: 'u1', title: 'Morning Coffee', artist: 'User123', date: '2025-09-16', plays: '1.2K', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-  { id: 'u2', title: 'Chill Lofi', artist: 'BeatsMaster', date: '2025-09-15', plays: '5.7K', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-  { id: 'u3', title: 'Guitar Session', artist: 'MusicLover', date: '2025-09-14', plays: '3.4K', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-  { id: 'u4', title: 'Sunset Walk', artist: 'Dreamer', date: '2025-09-13', plays: '2.8K', imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-  { id: 'u5', title: 'Rainy Mood', artist: 'Cloudy Beats', date: '2025-09-12', plays: '2.5K', imageUrl: 'https://images.unsplash.com/photo-1465101178521-c1a6bca7a581?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
-  { id: 'u6', title: 'City Lights', artist: 'UrbanSoul', date: '2025-09-11', plays: '2.2K', imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-  { id: 'u7', title: 'Forest Echo', artist: 'NatureSound', date: '2025-09-10', plays: '2.0K', imageUrl: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-  { id: 'u8', title: 'Ocean Drive', artist: 'WaveRider', date: '2025-09-09', plays: '1.8K', imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
-  { id: 'u9', title: 'Starry Night', artist: 'Cosmo', date: '2025-09-08', plays: '1.6K', imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-  { id: 'u10', title: 'Mountain Air', artist: 'Highlander', date: '2025-09-07', plays: '1.4K', imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
-  { id: 'u11', title: 'Golden Fields', artist: 'Sunset Crew', date: '2025-09-06', plays: '1.2K', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
-  { id: 'u12', title: 'Dreamcatcher', artist: 'Ambient Flow', date: '2025-09-05', plays: '1.0K', imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
+  { id: 'u1', title: 'Morning Coffee', artist: 'User123', date: '2025-09-16', plays: '1.2K', imageUrl: '/images/coffee-shop.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { id: 'u2', title: 'Chill Lofi', artist: 'BeatsMaster', date: '2025-09-15', plays: '5.7K', imageUrl: '/images/coffee-shop.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+  { id: 'u3', title: 'Guitar Session', artist: 'MusicLover', date: '2025-09-14', plays: '3.4K', imageUrl: '/images/guitar-closeup.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+  { id: 'u4', title: 'Sunset Walk', artist: 'Dreamer', date: '2025-09-13', plays: '2.8K', imageUrl: '/images/sunset-beach.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+  { id: 'u5', title: 'Rainy Mood', artist: 'Cloudy Beats', date: '2025-09-12', plays: '2.5K', imageUrl: '/images/rainy-window.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
+  { id: 'u6', title: 'City Lights', artist: 'UrbanSoul', date: '2025-09-11', plays: '2.2K', imageUrl: '/images/neon-alley.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
+  { id: 'u7', title: 'Forest Echo', artist: 'NatureSound', date: '2025-09-10', plays: '2.0K', imageUrl: '/images/forest-green.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
+  { id: 'u8', title: 'Ocean Drive', artist: 'WaveRider', date: '2025-09-09', plays: '1.8K', imageUrl: '/images/neon-reflection.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+  { id: 'u9', title: 'Starry Night', artist: 'Cosmo', date: '2025-09-08', plays: '1.6K', imageUrl: '/images/starry-night.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
+  { id: 'u10', title: 'Mountain Air', artist: 'Highlander', date: '2025-09-07', plays: '1.4K', imageUrl: '/images/mountain-landscape.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
+  { id: 'u11', title: 'Golden Fields', artist: 'Sunset Crew', date: '2025-09-06', plays: '1.2K', imageUrl: '/images/wheat-field.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
+  { id: 'u12', title: 'Dreamcatcher', artist: 'Ambient Flow', date: '2025-09-05', plays: '1.0K', imageUrl: '/images/cozy-bedroom.jpg', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
 ];
 
 const recommendations = [
@@ -89,7 +89,7 @@ const recommendations = [
     title: 'Ariana Grande',
     subtitle: 'Ariana Grande',
     // Pop diva / stage lighting
-    imageUrl: 'https://images.unsplash.com/photo-1518976024611-4881d58c1c91?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/concert-silhouette.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
   },
   {
@@ -97,7 +97,7 @@ const recommendations = [
     title: 'TOP 100 Hits',
     subtitle: 'Alejano',
     // Crowd / festival energy
-    imageUrl: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/concert-stage-crowd.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
   },
   {
@@ -105,7 +105,7 @@ const recommendations = [
     title: 'Urban Mix',
     subtitle: 'Carrie Underwood',
     // City night / urban vibe
-    imageUrl: 'https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/neon-alley.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
   },
   {
@@ -113,7 +113,7 @@ const recommendations = [
     title: 'Lo-Fi Chill',
     subtitle: 'Beats & Coffee',
     // Cozy desk / chill work ambience
-    imageUrl: 'https://images.unsplash.com/photo-1490135900376-2e86d918a23d?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/coffee-shop.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
   },
   {
@@ -121,7 +121,7 @@ const recommendations = [
     title: 'Electro House',
     subtitle: 'DJ Pulse',
     // Neon lights / DJ deck
-    imageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/dj-mixer.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'
   },
   {
@@ -129,7 +129,7 @@ const recommendations = [
     title: 'Indie Folk',
     subtitle: 'The Wanderers',
     // Acoustic guitar / nature
-    imageUrl: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/guitar-closeup.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3'
   },
   {
@@ -137,7 +137,7 @@ const recommendations = [
     title: 'Chillhop',
     subtitle: 'Beatsmith',
     // Vinyl / warm tones
-    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/vinyl-turntable.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'
   },
   {
@@ -145,7 +145,7 @@ const recommendations = [
     title: 'Ambient Waves',
     subtitle: 'Sleep Sound',
     // Abstract calm gradient water
-    imageUrl: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/ocean-waves.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'
   },
   {
@@ -153,7 +153,7 @@ const recommendations = [
     title: 'Rock Anthems',
     subtitle: 'Stadium',
     // Guitar performance / stage
-    imageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/guitar-closeup.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
   },
   {
@@ -161,7 +161,7 @@ const recommendations = [
     title: 'Classical Calm',
     subtitle: 'Orchestra',
     // Piano / classical instrument
-    imageUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/piano-hands.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'
   },
   {
@@ -169,7 +169,7 @@ const recommendations = [
     title: 'Bedroom Pop',
     subtitle: 'Soft Echo',
     // Soft pastel cozy room
-    imageUrl: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/cozy-bedroom.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3'
   },
   {
@@ -177,7 +177,7 @@ const recommendations = [
     title: 'Global Beats',
     subtitle: 'WorldMix',
     // Cultural / world percussion vibe
-    imageUrl: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: '/images/drums.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3'
   },
 ];
@@ -249,7 +249,7 @@ const Home = () => {
       <RecommendationCard
         key={track.id}
         title={track.title}
-        subtitle={track.artist + (track.plays ? ` · ${track.plays} plays` : '')}
+        subtitle={track.artist + (track.plays ? ` В· ${track.plays} plays` : '')}
         imageUrl={track.imageUrl}
         audioUrl={track.audioUrl}
       />
@@ -261,7 +261,7 @@ const Home = () => {
       <RecommendationCard
         key={release.id}
         title={release.title}
-        subtitle={release.artist + (release.date ? ` · ${release.date}` : '')}
+        subtitle={release.artist + (release.date ? ` В· ${release.date}` : '')}
         imageUrl={release.imageUrl}
         audioUrl={release.audioUrl}
       />
@@ -273,7 +273,7 @@ const Home = () => {
       <RecommendationCard
         key={track.id}
         title={track.title}
-        subtitle={track.artist + (track.plays ? ` · ${track.plays} plays` : '') + (track.date ? ` · ${track.date}` : '')}
+        subtitle={track.artist + (track.plays ? ` В· ${track.plays} plays` : '') + (track.date ? ` В· ${track.date}` : '')}
         imageUrl={track.imageUrl}
         audioUrl={track.audioUrl}
       />
@@ -352,7 +352,7 @@ const Home = () => {
 
       {/* Recommendations Section */}
       <section className="section">
-        <h2 className="section-title">Recommendations</h2>
+        <h2 className="section-title">Рекомендации</h2>
         <HorizontalScroller id="recommendations-scroll">
           {recommendationsList.map((rec, idx) => (
             React.cloneElement(rec, { key: rec.key || idx })
@@ -362,7 +362,7 @@ const Home = () => {
 
       {/* Popular Now Section */}
       <section className="section">
-        <h2 className="section-title">Popular Now</h2>
+        <h2 className="section-title">Популярное сейчас</h2>
         <HorizontalScroller id="popular-scroll">
           {popularTracksList}
         </HorizontalScroller>
@@ -381,8 +381,8 @@ const Home = () => {
           <div className="panel-overlay" />
           <div className="panel-content">
             <span className="panel-tag">Chill Mood</span>
-            <h3 className="panel-title">Lo‑Fi Chill</h3>
-            <p className="panel-subtitle">Beats & Coffee · Focus · Relax · Night coding</p>
+            <h3 className="panel-title">Lo-Fi Chill</h3>
+            <p className="panel-subtitle">Beats & Coffee - Focus - Relax - Night coding</p>
             <div className="panel-actions">
               <button
                 className="play-button small"
@@ -401,7 +401,7 @@ const Home = () => {
           </div>
           <LazyImage
             className="panel-bg"
-            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1400&q=80" /* cozy cafe / work */
+            src="/images/coffee-shop-banner.jpg" /* cozy cafe / work */
             alt="Lo-Fi Chill background"
           />
         </div>
@@ -417,7 +417,7 @@ const Home = () => {
             <div className="panel-content">
               <span className="panel-tag alt">Top Charts</span>
               <h3 className="panel-title">Top 100 Hits</h3>
-              <p className="panel-subtitle">Alejano · Energy · Trending · Daily mix</p>
+              <p className="panel-subtitle">Alejano - Energy - Trending - Daily mix</p>
               <div className="panel-actions">
                 <button
                   className="play-button small"
@@ -436,7 +436,7 @@ const Home = () => {
             </div>
             <LazyImage
               className="panel-bg"
-              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80" /* vibrant stage lighting */
+              src="/images/concert-stage-crowd.jpg" /* vibrant stage lighting */
               alt="Top 100 background"
             />
         </div>
@@ -444,7 +444,7 @@ const Home = () => {
 
       {/* New Releases Section */}
       <section className="section">
-        <h2 className="section-title">New Releases</h2>
+        <h2 className="section-title">Новые релизы</h2>
         <HorizontalScroller id="newreleases-scroll">
           {newReleasesList}
         </HorizontalScroller>
@@ -452,7 +452,7 @@ const Home = () => {
 
       {/* User Music Section */}
       <section className="section">
-        <h2 className="section-title">From Our Community</h2>
+        <h2 className="section-title">От нашего сообщества</h2>
         <HorizontalScroller id="usermusic-scroll">
           {userMusicList}
         </HorizontalScroller>

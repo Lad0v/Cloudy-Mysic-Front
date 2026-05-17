@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { FaHome, FaSearch, FaMusic, FaList, FaUser } from 'react-icons/fa';
 import { FaCloud } from 'react-icons/fa6';
 
@@ -20,10 +20,10 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <div className="logo">
+      <a className="logo" href="/">
         <FaCloud className="logo-icon" />
         <span>Cloudy</span>
-      </div>
+      </a>
       <nav className="nav-menu">
         <a href="#/" className={`nav-link ${route === '/' ? 'active' : ''}`}>
           <FaHome className="nav-icon" />

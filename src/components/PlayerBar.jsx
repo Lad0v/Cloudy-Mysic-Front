@@ -11,10 +11,10 @@ import { HeartIcon, HeartFilledIcon } from './icons/MediaIcons.jsx';
 import { playUrl, pause, getCurrent, onChange, offChange, seek, setVolume as playerSetVolume, getTime, getDuration, nextTrack, prevTrack } from '../lib/player';
 
 const PlayerBar = () => {
-  // Состояние для управления воспроизведением
+  // РЎРѕСЃС‚РѕСЏРЅРёРµ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РІРѕСЃРїСЂРѕРёР·РІРµРґРµРЅРёРµРј
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(180); // 3 минуты в секундах
+  const [duration, setDuration] = useState(180); // 3 РјРёРЅСѓС‚С‹ РІ СЃРµРєСѓРЅРґР°С…
   const [volume, setVolume] = useState(70);
   const [isMuted, setIsMuted] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -65,7 +65,7 @@ const PlayerBar = () => {
         id: 'fav',
         name: 'Любимое',
         createdAt: Date.now(),
-        imageUrl: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80',
+        imageUrl: '/images/vinyl-turntable.jpg',
         tracks: [],
       };
       return [...items, fav];
@@ -110,19 +110,19 @@ const PlayerBar = () => {
   const progressBarRef = useRef(null);
   const volumeBarRef = useRef(null);
   
-  // Форматирование времени в минуты:секунды
+  // Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РІСЂРµРјРµРЅРё РІ РјРёРЅСѓС‚С‹:СЃРµРєСѓРЅРґС‹
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
   
-  // Обработчик изменения времени воспроизведения
+  // РћР±СЂР°Р±РѕС‚С‡РёРє РёР·РјРµРЅРµРЅРёСЏ РІСЂРµРјРµРЅРё РІРѕСЃРїСЂРѕРёР·РІРµРґРµРЅРёСЏ
   const handleTimeUpdate = () => {
     setCurrentTime(getTime());
   };
   
-  // Обработчик перемотки
+  // РћР±СЂР°Р±РѕС‚С‡РёРє РїРµСЂРµРјРѕС‚РєРё
   const handleSeek = (e) => {
     const progressBar = progressBarRef.current;
     const clickPosition = e.nativeEvent.offsetX;
@@ -132,7 +132,7 @@ const PlayerBar = () => {
     setCurrentTime(seekTime);
   };
   
-  // Обработчик изменения громкости
+  // РћР±СЂР°Р±РѕС‚С‡РёРє РёР·РјРµРЅРµРЅРёСЏ РіСЂРѕРјРєРѕСЃС‚Рё
   const handleVolumeChange = (e) => {
     const volumeBar = volumeBarRef.current;
     const clickPosition = e.nativeEvent.offsetX;
@@ -151,7 +151,7 @@ const PlayerBar = () => {
     }
   };
   
-  // Обработчик переключения звука
+  // РћР±СЂР°Р±РѕС‚С‡РёРє РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ Р·РІСѓРєР°
   const toggleMute = () => {
     if (isMuted) {
       playerSetVolume(volume / 100);

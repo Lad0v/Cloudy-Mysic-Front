@@ -34,7 +34,7 @@
 .btn.tiny { padding:3px 8px; font-size:11px; }
 .btn:disabled { opacity:.5; cursor:not-allowed; }
 
-.input { padding:8px 12px; border-radius:9px; border:1px solid #c9d1d9; background:#f1f5f9; font-size:13px; min-width:140px; }
+.input { padding:8px 12px; border-radius:9px; border:1px solid #c9d1d9; background:#f1f5f9; font-size:13px; min-width:140px; color: #000;}
 .input:focus { outline:2px solid #2d62dd33; border-color:#2d62dd; background:#fff; }
 
 .stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:16px; }

@@ -19,7 +19,7 @@ function getPlaylistIdFromHash() {
   return m ? decodeURIComponent(m[1]) : null;
 }
 
-const FAVORITE_DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80';
+const FAVORITE_DEFAULT_IMAGE = '/images/vinyl-turntable.jpg';
 
 export default function PlaylistView() {
   const [playlist, setPlaylist] = useState(null);

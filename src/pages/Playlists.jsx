@@ -18,7 +18,7 @@ function savePlaylists(items) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
 }
 
-const FAVORITE_DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80'; // vibrant heart-like abstract
+const FAVORITE_DEFAULT_IMAGE = '/images/vinyl-turntable.jpg'; // vinyl record close-up
 
 export default function Playlists() {
   const [playlists, setPlaylists] = useState(() => {
@@ -30,7 +30,7 @@ export default function Playlists() {
     );
   });
 
-  // one‑off migration: replace legacy placeholder heart with new themed image
+  // one-off migration: replace legacy placeholder heart with new themed image
   useEffect(() => {
     setPlaylists(prev => {
       let changed = false;
@@ -76,7 +76,7 @@ export default function Playlists() {
                 onError={(e)=>{ if(!e.currentTarget.src.endsWith('/placeholder.png')) e.currentTarget.src='/placeholder.png'; }}
               />
             </div>
-            <button className="card-play-button" aria-label="Открыть">▶</button>
+            <button className="card-play-button" aria-label="Открыть">&#9654;</button>
             <div className="card-content">
               <div className="card-title">{pl.name}</div>
               <div className="card-subtitle">Плейлист</div>

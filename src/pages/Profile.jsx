@@ -91,7 +91,7 @@ export default function Profile() {
     <div className="profile-wrapper">
       <div className="profile-card-outer">
         <div className="profile-left">
-          <h1 className="profile-heading">Профиль</h1>
+          <h2 className="profile-heading">Профиль</h2>
           <div className="profile-avatar-block">
             <div className="avatar-circle">
               {profile.avatarDataUrl ? (
